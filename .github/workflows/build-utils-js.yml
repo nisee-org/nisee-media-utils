@@ -11,10 +11,6 @@ on:
     branches:
       - "master"
 
-env:
-  REPO_PATH: /tmp/${{ github.repository }}-sdk-js
-  REPO_URL: https://${{ secrets.GH_PAT }}:x-oauth-basic@github.com/${{ github.repository }}-sdk-js.git
-
 jobs:
   build:
     runs-on: "ubuntu-20.04"
@@ -51,7 +47,7 @@ jobs:
       - name: Create Git Tag
         run: |
           TAG_NAME="$GIT_BRANCH-$COMMIT_DATE-$COMMIT_TIME-$GH_SHA_SHORT"
-          git config user.name "github-actions[bot]"
+          git config user.name "evertonbzr"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git tag $TAG_NAME
           git push origin $TAG_NAME
