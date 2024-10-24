@@ -42,10 +42,10 @@ jobs:
           version: "9"
 
       - name: Install dependencies
-        run: p install --frozen-lockfile --silent
+        run: pnpm install --frozen-lockfile --silent
 
       - name: Build
-        run: p build
+        run: pnpm build
 
       - name: Create Tag
         run: |
