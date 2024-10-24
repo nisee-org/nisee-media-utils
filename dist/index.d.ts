@@ -1,0 +1,1 @@
+export { downloadMediaMessage } from "./messages";
