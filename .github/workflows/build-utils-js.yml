@@ -1,0 +1,64 @@
+name: build-utils-js
+on:
+  workflow_dispatch:
+  workflow_call:
+  push:
+    paths:
+      - "src/**"
+      - "pnpm-lock.yaml"
+      - ".github/workflows/build-utils-js.yml"
+    branches:
+      - "main"
+
+env:
+  REPO_PATH: /tmp/${{ github.repository }}-sdk-js
+  REPO_URL: https://${{ secrets.GH_PAT }}:x-oauth-basic@github.com/${{ github.repository }}-sdk-js.git
+
+jobs:
+  build:
+    runs-on: "ubuntu-20.04"
+    timeout-minutes: 12
+    steps:
+      - run: echo "🎉 The job was automatically triggered by a ${{ github.event_name }} event."
+
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 10
+          persist-credentials: false
+
+      - name: Setup Git
+        run: |
+          GIT_BRANCH=${{ github.ref }}
+          echo "REPOSITORY_NAME=$(echo "$GITHUB_REPOSITORY" | awk -F / '{print $2}')" >> $GITHUB_ENV
+          echo "GIT_BRANCH=$(echo "${GIT_BRANCH/refs\/heads\//}")" >> $GITHUB_ENV
+          echo "COMMIT_DATE=$(git log -n 1 --pretty='format:%cd' --date=format:'%y-%m-%d')" >> $GITHUB_ENV
+          echo "COMMIT_TIME=$(git log -n 1 --pretty='format:%cd' --date=format:'%H-%M-%S')" >> $GITHUB_ENV
+          echo "CURRENT_DATETIME=$(date +'%Y-%m-%d %H:%M:%S')" >> $GITHUB_ENV
+          echo "GH_SHA_SHORT=$(echo $GITHUB_SHA | cut -c 1-7)" >> $GITHUB_ENV
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: "pnpm"
+          cache-dependency-path: pnpm-lock.yaml
+
+      - name: Install dependencies
+        run: p install --frozen-lockfile --silent
+
+      - name: Build
+        run: p build
+
+      - name: Create Tag
+        run: |
+          git tag $GIT_BRANCH-$COMMIT_DATE-$COMMIT_TIME-$GH_SHA_SHORT
+          git push -u --set-upstream origin ${{ env.GIT_BRANCH }} --tags
+
+      - name: Job Summary
+        run: |
+          echo "SDK Tag: $GIT_BRANCH-$COMMIT_DATE-$COMMIT_TIME-$GH_SHA_SHORT" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "- Branch: $GIT_BRANCH" >> $GITHUB_STEP_SUMMARY
+          echo "- Commit Date: $COMMIT_DATE" >> $GITHUB_STEP_SUMMARY
+          echo "- Commit Time: $COMMIT_TIME" >> $GITHUB_STEP_SUMMARY
+          echo "- Commit SHA: $GH_SHA_SHORT" >> $GITHUB_STEP_SUMMARY

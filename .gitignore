@@ -4,7 +4,6 @@
 node_modules
 .pnp
 .pnp.js
-dist
 everton.ts
 # Local env files
 .env
