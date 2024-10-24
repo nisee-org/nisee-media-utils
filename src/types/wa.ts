@@ -1,4 +1,4 @@
-import { proto } from "./WAProto";
+import { proto } from "../../WAProto";
 
 export const MEDIA_HKDF_KEY_MAPPING = {
   audio: "Audio",

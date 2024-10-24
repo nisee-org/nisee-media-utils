@@ -1,8 +1,8 @@
 import { Boom } from "@hapi/boom";
 import { AxiosRequestConfig } from "axios";
 import { Transform } from "stream";
+import { proto } from "../WAProto";
 import { downloadContentFromMessage } from "./messages-media";
-import { proto } from "./types/WAProto";
 import {
   DownloadableMessage,
   MediaType,
