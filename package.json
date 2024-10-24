@@ -10,7 +10,6 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "@types/long": "^5.0.0",
     "@types/node": "^22.7.9",
     "tsup": "^8.3.0",
     "tsx": "^4.19.1",
@@ -19,6 +18,7 @@
   "dependencies": {
     "@hapi/boom": "^10.0.1",
     "axios": "^1.7.7",
+    "futoin-hkdf": "^1.5.3",
     "protobufjs": "^7.4.0"
   }
 }
