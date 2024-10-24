@@ -48,17 +48,13 @@ jobs:
       - name: Build
         run: pnpm build
 
-      - name: Create Tag
-        uses: rickstaa/action-create-tag@v1
-        id: "tag_create"
-        with:
-          tag: ${{ env.GIT_BRANCH }}-${{ env.COMMIT_DATE }}-${{ env.COMMIT_TIME }}-${{ env.GH_SHA_SHORT }}
-          tag_exists_error: false
-
-      # - name: Create Tag
-      #   run: |
-      #     git tag $GIT_BRANCH-$COMMIT_DATE-$COMMIT_TIME-$GH_SHA_SHORT
-      #     git push -u --set-upstream origin ${{ env.GIT_BRANCH }} --tags
+      - name: Create Git Tag
+        run: |
+          TAG_NAME="$GIT_BRANCH-$COMMIT_DATE-$COMMIT_TIME-$GH_SHA_SHORT"
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git tag $TAG_NAME
+          git push origin $TAG_NAME
 
       - name: Job Summary
         run: |
