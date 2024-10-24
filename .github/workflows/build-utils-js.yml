@@ -48,11 +48,12 @@ jobs:
       - name: Build
         run: pnpm build
 
-      - name: Tag commit
-        uses: tvdias/github-tagger@v0.0.1
+      - name: Create Tag
+        uses: rickstaa/action-create-tag@v1
+        id: "tag_create"
         with:
-          repo-token: "${{ secrets.GITHUB_TOKEN }}"
-          tag: "${{ env.GIT_BRANCH }}-${{ env.COMMIT_DATE }}-${{ env.COMMIT_TIME }}-${{ env.GH_SHA_SHORT }}"
+          tag: ${{ env.GIT_BRANCH }}-${{ env.COMMIT_DATE }}-${{ env.COMMIT_TIME }}-${{ env.GH_SHA_SHORT }}
+          tag_exists_error: false
 
       # - name: Create Tag
       #   run: |
