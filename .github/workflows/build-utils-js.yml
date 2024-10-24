@@ -47,12 +47,11 @@ jobs:
       - name: Build
         run: pnpm build
 
-      - name: Create Git Tag
-        run: |
-          TAG_NAME="$GIT_BRANCH-$COMMIT_DATE-$COMMIT_TIME-$GH_SHA_SHORT"
-          git config --global user.name "evertonbzr"
-          git tag $TAG_NAME
-          git push origin $TAG_NAME
+      # - name: Create Git Tag
+      #   run: |
+      #     TAG_NAME="$GIT_BRANCH-$COMMIT_DATE-$COMMIT_TIME-$GH_SHA_SHORT"
+      #     git tag $TAG_NAME
+      #     git push origin $TAG_NAME
 
       - name: Job Summary
         run: |
