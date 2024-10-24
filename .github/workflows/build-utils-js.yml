@@ -50,6 +50,8 @@ jobs:
           git config --global user.name "evertonbzr"
           git tag $TAG_NAME
           git push origin $TAG_NAME
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Job Summary
         run: |
