@@ -8,7 +8,7 @@ on:
       - "pnpm-lock.yaml"
       - ".github/workflows/build-utils-js.yml"
     branches:
-      - "main"
+      - "master"
 
 env:
   REPO_PATH: /tmp/${{ github.repository }}-sdk-js
