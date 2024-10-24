@@ -9,7 +9,7 @@ on:
       - ".github/workflows/build-utils-js.yml"
       - "dist"
     branches:
-      - "master"
+      - "main"
 
 jobs:
   build:
