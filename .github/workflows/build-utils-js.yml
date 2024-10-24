@@ -37,11 +37,9 @@ jobs:
           echo "GH_SHA_SHORT=$(echo $GITHUB_SHA | cut -c 1-7)" >> $GITHUB_ENV
 
       - name: Setup Node.js
-        uses: actions/setup-node@v4
+        uses: pnpm/action-setup@v4
         with:
-          node-version: 20
-          cache: "pnpm"
-          cache-dependency-path: pnpm-lock.yaml
+          version: "9"
 
       - name: Install dependencies
         run: p install --frozen-lockfile --silent
